@@ -17,6 +17,20 @@ export const authRoutes: Route[] = [
       ),
   },
   {
+    path: AppRoutes.auth.forgotPassword,
+    loadComponent: () =>
+      import('../feature/auth/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent
+      ),
+  },
+  {
+    path: AppRoutes.auth.verifyOtp,
+    loadComponent: () =>
+      import('../feature/auth/verify-otp/verify-otp.component').then(
+        (m) => m.VerifyOtpComponent
+      ),
+  },
+  {
     path: '',
     redirectTo: AppRoutes.auth.login,
     pathMatch: 'full',

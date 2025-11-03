@@ -3,5 +3,7 @@ export const AppRoutes = {
     root: 'auth',
     login: 'login',
     register: 'register',
+    forgotPassword: 'forgot-password',
+    verifyOtp: 'verify-otp',
   },
 } as const;
