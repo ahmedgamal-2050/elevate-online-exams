@@ -31,6 +31,13 @@ export const authRoutes: Route[] = [
       ),
   },
   {
+    path: AppRoutes.auth.resetPassword,
+    loadComponent: () =>
+      import('../feature/auth/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent
+      ),
+  },
+  {
     path: '',
     redirectTo: AppRoutes.auth.login,
     pathMatch: 'full',

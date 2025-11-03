@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,11 +22,16 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  showPassword = signal(false);
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
   appRoutes = AppRoutes;
+
+  togglePasswordVisibility() {
+    this.showPassword.set(!this.showPassword());
+  }
 
   login() {
     if (this.loginForm.invalid) {

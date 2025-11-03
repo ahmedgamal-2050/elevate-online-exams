@@ -135,6 +135,12 @@ export class VerifyOtpComponent implements OnInit, OnDestroy {
     const otp = this.getOtpValue();
     console.log('Verifying OTP:', otp);
     // Add verification logic here
+
+    // Navigate to reset password page after successful verification
+    this.router.navigate([
+      '/' + this.appRoutes.auth.root,
+      this.appRoutes.auth.resetPassword,
+    ]);
   }
 
   resendCode() {

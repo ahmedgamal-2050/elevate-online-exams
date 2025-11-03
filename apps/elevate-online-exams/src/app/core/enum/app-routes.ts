@@ -5,5 +5,6 @@ export const AppRoutes = {
     register: 'register',
     forgotPassword: 'forgot-password',
     verifyOtp: 'verify-otp',
+    resetPassword: 'reset-password',
   },
 } as const;
