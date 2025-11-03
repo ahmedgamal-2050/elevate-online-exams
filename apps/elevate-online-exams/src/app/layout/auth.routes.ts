@@ -10,6 +10,13 @@ export const authRoutes: Route[] = [
       ),
   },
   {
+    path: AppRoutes.auth.register,
+    loadComponent: () =>
+      import('../feature/auth/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
+  },
+  {
     path: '',
     redirectTo: AppRoutes.auth.login,
     pathMatch: 'full',

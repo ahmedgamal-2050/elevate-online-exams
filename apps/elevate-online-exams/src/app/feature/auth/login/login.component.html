@@ -99,7 +99,12 @@
 
     <div class="text-center text-gray-500 text-sm font-medium mt-9">
       Don’t have an account?
-      <a href="javascript:void(0)" class="text-blue-600"> Create yours </a>
+      <a
+        [routerLink]="['/' + appRoutes.auth.root, appRoutes.auth.register]"
+        class="text-blue-600"
+      >
+        Create yours
+      </a>
     </div>
   </form>
 </div>

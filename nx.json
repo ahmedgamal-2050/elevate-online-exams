@@ -46,11 +46,11 @@
       "unitTestRunner": "vitest"
     },
     "@nx/angular:component": {
-      "style": "scss",
+      "style": "css",
       "type": "component"
     },
     "@schematics/angular:component": {
-      "style": "scss",
+      "style": "css",
       "type": "component"
     },
     "@nx/angular:directive": {
