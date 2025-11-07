@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve elevate-online-exams -o --port 4002",
-    "build": "nx build elevate-online-exams",
+    "build": "nx build elevate-online-exams --verbose",
     "lint": "nx run elevate-online-exams:lint",
     "test": "nx run elevate-online-exams:test"
   },
@@ -22,8 +22,7 @@
     "primeng": "^20.3.0",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.16",
-    "tailwindcss-primeui": "^0.6.1",
-    "zone.js": "~0.15.0"
+    "tailwindcss-primeui": "^0.6.1"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "~1.19.1",
