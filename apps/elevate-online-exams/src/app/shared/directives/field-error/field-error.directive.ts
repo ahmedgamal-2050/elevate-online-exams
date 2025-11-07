@@ -12,6 +12,7 @@ import { merge, Subscription } from 'rxjs';
 
 @Directive({
   selector: '[formControlName][appFieldError]',
+  standalone: true,
 })
 export class FieldErrorDirective implements OnInit, OnDestroy {
   errorClass = input<string>('appFieldError');

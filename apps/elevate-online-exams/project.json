@@ -12,7 +12,7 @@
       "options": {
         "outputPath": "dist/apps/elevate-online-exams",
         "browser": "apps/elevate-online-exams/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/elevate-online-exams/tsconfig.app.json",
         "assets": [
           {

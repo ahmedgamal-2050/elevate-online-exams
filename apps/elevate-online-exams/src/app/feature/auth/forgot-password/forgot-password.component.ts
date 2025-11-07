@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,13 +22,12 @@ import { AppRoutes } from '../../../core/enum/app-routes';
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
+  router = inject(Router);
   appRoutes = AppRoutes;
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
-
-  constructor(private router: Router) {}
 
   continue() {
     if (this.forgotPasswordForm.invalid) {
@@ -37,7 +36,7 @@ export class ForgotPasswordComponent {
 
     const email = this.forgotPasswordForm.value.email;
     console.log('Sending OTP to:', email);
-    
+
     // Navigate to verify OTP page
     this.router.navigate([
       '/' + this.appRoutes.auth.root,
@@ -45,4 +44,3 @@ export class ForgotPasswordComponent {
     ]);
   }
 }
-

@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve elevate-online-exams -o --port 4002"
+    "start": "nx serve elevate-online-exams -o --port 4002",
+    "build": "nx build elevate-online-exams",
+    "lint": "nx run elevate-online-exams:lint",
+    "test": "nx run elevate-online-exams:test"
   },
   "private": true,
   "dependencies": {

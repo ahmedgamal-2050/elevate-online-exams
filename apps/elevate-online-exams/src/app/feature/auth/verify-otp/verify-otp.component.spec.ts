@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerifyOtpComponent } from './verify-otp.component';
+import { provideRouter } from '@angular/router';
 
 describe('VerifyOtpComponent', () => {
   let component: VerifyOtpComponent;
@@ -8,9 +9,9 @@ describe('VerifyOtpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VerifyOtpComponent]
-    })
-    .compileComponents();
+      imports: [VerifyOtpComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VerifyOtpComponent);
     component = fixture.componentInstance;
@@ -21,4 +22,3 @@ describe('VerifyOtpComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
