@@ -6,7 +6,9 @@
     "start": "nx serve elevate-online-exams -o --port 4002",
     "build": "nx build elevate-online-exams --verbose",
     "lint": "nx run elevate-online-exams:lint",
-    "test": "nx run elevate-online-exams:test"
+    "lint:fix": "nx run elevate-online-exams:lint --fix",
+    "test": "nx run elevate-online-exams:test",
+    "prettier": "prettier --write \"**/*.{html,css,scss,ts,js,jsx,json,md}\""
   },
   "private": true,
   "dependencies": {
@@ -53,6 +55,7 @@
     "angular-eslint": "^20.3.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "nx": "22.0.2",

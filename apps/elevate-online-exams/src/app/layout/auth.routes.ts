@@ -6,21 +6,21 @@ export const authRoutes: Route[] = [
     path: AppRoutes.auth.login,
     loadComponent: () =>
       import('../feature/auth/login/login.component').then(
-        (m) => m.LoginComponent
+        m => m.LoginComponent
       ),
   },
   {
     path: AppRoutes.auth.register,
     loadComponent: () =>
       import('../feature/auth/register/register.component').then(
-        (m) => m.RegisterComponent
+        m => m.RegisterComponent
       ),
   },
   {
     path: AppRoutes.auth.forgotPassword,
     loadComponent: () =>
       import('../feature/auth/forgot-password/forgot-password.component').then(
-        (m) => m.ForgotPasswordComponent
+        m => m.ForgotPasswordComponent
       ),
   },
   {

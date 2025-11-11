@@ -7,7 +7,7 @@ export const appRoutes: Route[] = [
     path: AppRoutes.auth.root,
     loadComponent: () =>
       import('./layout/auth-layout/auth-layout.component').then(
-        (m) => m.AuthLayoutComponent
+        m => m.AuthLayoutComponent
       ),
     children: [...authRoutes],
   },
