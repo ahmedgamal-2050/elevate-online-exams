@@ -1,4 +1,5 @@
-@if (control.invalid && (control.touched || control.dirty)) {
+@if (control.invalid && (control.touched || control.dirty) && control.errors &&
+control.errors[errorKey()]) {
 <p class="text-red-500 text-sm font-medium mt-2">
   <ng-content />
 </p>

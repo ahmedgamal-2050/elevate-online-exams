@@ -2,7 +2,6 @@
   <h4 class="text-gray-800 text-2xl font-bold mb-10 font-inter">Login</h4>
 
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    @let emailControl = loginForm.get('email');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="email">Email</label>
 
@@ -17,14 +16,15 @@
         errorClass="border-red-500"
       />
 
-      @if (emailControl?.errors?.['required']) {
-      <app-field-error controlName="email">Email is required</app-field-error>
-      } @if (emailControl?.errors?.['email']) {
-      <app-field-error controlName="email">Email is invalid</app-field-error>
-      }
+      <app-field-error controlName="email" errorKey="required">
+        Email is required
+      </app-field-error>
+
+      <app-field-error controlName="email" errorKey="email">
+        Email is invalid
+      </app-field-error>
     </div>
 
-    @let passwordControl = loginForm.get('password');
     <div>
       <label class="block text-gray-800 font-medium" for="password">
         Password
@@ -103,11 +103,9 @@
         </button>
       </div>
 
-      @if (passwordControl?.errors?.['required']) {
-      <app-field-error controlName="password">
+      <app-field-error controlName="password" errorKey="required">
         Password is required
       </app-field-error>
-      }
     </div>
 
     <div class="text-end mb-10">

@@ -16,6 +16,7 @@ import { ControlContainer, FormControl, FormGroup } from '@angular/forms';
 export class FieldErrorComponent {
   private readonly controlContainer = inject(ControlContainer);
   controlName = input.required<string>();
+  errorKey = input.required<string>();
 
   get parentFormGroup() {
     return this.controlContainer.control as FormGroup;

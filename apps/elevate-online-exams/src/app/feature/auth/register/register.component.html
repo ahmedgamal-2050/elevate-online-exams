@@ -5,7 +5,6 @@
 
   <form [formGroup]="registerForm" (ngSubmit)="register()">
     <div class="grid grid-cols-2 gap-4">
-      @let firstNameControl = registerForm.get('firstName');
       <div class="mb-4">
         <label class="block text-gray-800 font-medium" for="firstName">
           First name
@@ -22,14 +21,11 @@
           errorClass="border-red-500"
         />
 
-        @if (firstNameControl?.errors?.['required']) {
-        <app-field-error controlName="firstName">
+        <app-field-error controlName="firstName" errorKey="required">
           First name is required
         </app-field-error>
-        }
       </div>
 
-      @let lastNameControl = registerForm.get('lastName');
       <div class="mb-4">
         <label class="block text-gray-800 font-medium" for="lastName">
           Last name
@@ -46,15 +42,12 @@
           errorClass="border-red-500"
         />
 
-        @if (lastNameControl?.errors?.['required']) {
-        <app-field-error controlName="lastName">
+        <app-field-error controlName="lastName" errorKey="required">
           Last name is required
         </app-field-error>
-        }
       </div>
     </div>
 
-    @let usernameControl = registerForm.get('username');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="username">
         Username
@@ -71,14 +64,11 @@
         errorClass="border-red-500"
       />
 
-      @if (usernameControl?.errors?.['required']) {
-      <app-field-error controlName="username">
+      <app-field-error controlName="username" errorKey="required">
         Username is required
       </app-field-error>
-      }
     </div>
 
-    @let emailControl = registerForm.get('email');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="email">Email</label>
 
@@ -93,14 +83,15 @@
         errorClass="border-red-500"
       />
 
-      @if (emailControl?.errors?.['required']) {
-      <app-field-error controlName="email">Email is required</app-field-error>
-      } @if (emailControl?.errors?.['email']) {
-      <app-field-error controlName="email">Email is invalid</app-field-error>
-      }
+      <app-field-error controlName="email" errorKey="required">
+        Email is required
+      </app-field-error>
+
+      <app-field-error controlName="email" errorKey="email">
+        Email is invalid
+      </app-field-error>
     </div>
 
-    @let phoneControl = registerForm.get('phone');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="phone">Phone</label>
 
@@ -176,12 +167,11 @@
         />
       </div>
 
-      @if (phoneControl?.errors?.['required']) {
-      <app-field-error controlName="phone">Phone is required</app-field-error>
-      }
+      <app-field-error controlName="phone" errorKey="required">
+        Phone is required
+      </app-field-error>
     </div>
 
-    @let passwordControl = registerForm.get('password');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="password">
         Password
@@ -260,14 +250,11 @@
         </button>
       </div>
 
-      @if (passwordControl?.errors?.['required']) {
-      <app-field-error controlName="password">
+      <app-field-error controlName="password" errorKey="required">
         Password is required
       </app-field-error>
-      }
     </div>
 
-    @let confirmPasswordControl = registerForm.get('confirmPassword');
     <div class="mb-4">
       <label class="block text-gray-800 font-medium" for="confirmPassword">
         Confirm Password
@@ -346,16 +333,16 @@
         </button>
       </div>
 
-      @if (confirmPasswordControl?.errors?.['required']) {
-      <app-field-error controlName="confirmPassword">
+      <app-field-error controlName="confirmPassword" errorKey="required">
         Confirm password is required
       </app-field-error>
-      } @if (registerForm.errors?.['passwordMismatch'] &&
-      confirmPasswordControl?.touched) {
-      <app-field-error controlName="confirmPassword">
+
+      <app-field-error
+        controlName="confirmPassword"
+        errorKey="passwordMismatch"
+      >
         Passwords do not match
       </app-field-error>
-      }
     </div>
 
     @if (registerForm.invalid && (registerForm.touched || registerForm.dirty)) {
