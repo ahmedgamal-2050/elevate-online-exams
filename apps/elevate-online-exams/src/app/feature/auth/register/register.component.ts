@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { FieldErrorDirective } from '../../../shared/directives/field-error/field-error.directive';
@@ -12,6 +10,7 @@ import { FieldErrorComponent } from '../../../shared/components/field-error/fiel
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { AuthFormService } from '../service/auth-form/auth-form.service';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +25,12 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  showPassword = false;
-  showConfirmPassword = false;
-  selectedCountryCode = '+20';
-  countryName = 'EG';
+  private readonly authFormService = inject(AuthFormService);
+
+  showPassword = signal(false);
+  showConfirmPassword = signal(false);
+  selectedCountryCode = signal('+20');
+  countryName = signal('EG');
   appRoutes = AppRoutes;
 
   registerForm = new FormGroup(
@@ -42,28 +43,15 @@ export class RegisterComponent {
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required]),
     },
-    { validators: this.passwordMatchValidator }
+    { validators: this.authFormService.passwordMatchValidator }
   );
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    if (!password || !confirmPassword) {
-      return null;
-    }
-
-    return password.value === confirmPassword.value
-      ? null
-      : { passwordMismatch: true };
-  }
-
   togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+    this.showPassword.set(!this.showPassword());
   }
 
   toggleConfirmPasswordVisibility() {
-    this.showConfirmPassword = !this.showConfirmPassword;
+    this.showConfirmPassword.set(!this.showConfirmPassword());
   }
 
   register() {

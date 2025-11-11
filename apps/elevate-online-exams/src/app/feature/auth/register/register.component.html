@@ -137,7 +137,7 @@
             </svg>
           </span>
           <span class="text-gray-800 text-sm">
-            {{ countryName }}({{ selectedCountryCode }})
+            {{ countryName() }}({{ selectedCountryCode() }})
           </span>
           <svg
             width="12"
@@ -179,7 +179,7 @@
 
       <div class="relative">
         <input
-          [type]="showPassword ? 'text' : 'password'"
+          [type]="showPassword() ? 'text' : 'password'"
           id="password"
           placeholder="********"
           formControlName="password"
@@ -193,7 +193,7 @@
           (click)="togglePasswordVisibility()"
           buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
         >
-          @if (showPassword) {
+          @if (showPassword()) {
           <svg
             width="20"
             height="20"
@@ -262,7 +262,7 @@
 
       <div class="relative">
         <input
-          [type]="showConfirmPassword ? 'text' : 'password'"
+          [type]="showConfirmPassword() ? 'text' : 'password'"
           id="confirmPassword"
           placeholder="********"
           formControlName="confirmPassword"
@@ -276,7 +276,7 @@
           (click)="toggleConfirmPasswordVisibility()"
           buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
         >
-          @if (showConfirmPassword) {
+          @if (showConfirmPassword()) {
           <svg
             width="20"
             height="20"

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,9 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { FieldErrorDirective } from '../../../shared/directives/field-error/field-error.directive';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { AuthMode } from '../model/auth.model';
 
 @Component({
   selector: 'app-verify-otp',
@@ -22,7 +23,8 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
   styleUrl: './verify-otp.component.css',
 })
 export class VerifyOtpComponent implements OnInit, OnDestroy {
-  private router = inject(Router);
+  changeMode = output<AuthMode>();
+
   appRoutes = AppRoutes;
   userEmail = 'user@example.com';
   timer = 60;
@@ -141,11 +143,8 @@ export class VerifyOtpComponent implements OnInit, OnDestroy {
     console.log('Verifying OTP:', otp);
     // Add verification logic here
 
-    // Navigate to reset password page after successful verification
-    this.router.navigate([
-      '/' + this.appRoutes.auth.root,
-      this.appRoutes.auth.resetPassword,
-    ]);
+    // switch to reset password mode after successful verification
+    this.changeMode.emit(AppRoutes.auth.resetPassword);
   }
 
   resendCode() {
@@ -159,10 +158,7 @@ export class VerifyOtpComponent implements OnInit, OnDestroy {
   }
 
   editEmail() {
-    // Navigate back to forgot password or allow editing email
-    this.router.navigate([
-      '/' + this.appRoutes.auth.root,
-      this.appRoutes.auth.forgotPassword,
-    ]);
+    // switch to forgot password mode to allow editing email
+    this.changeMode.emit(AppRoutes.auth.forgotPassword);
   }
 }

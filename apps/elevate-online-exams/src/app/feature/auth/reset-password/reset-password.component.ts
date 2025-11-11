@@ -1,10 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { FieldErrorDirective } from '../../../shared/directives/field-error/field-error.directive';
@@ -12,6 +10,7 @@ import { FieldErrorComponent } from '../../../shared/components/field-error/fiel
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { AuthFormService } from '../service/auth-form/auth-form.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,6 +25,8 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
   styleUrl: './reset-password.component.css',
 })
 export class ResetPasswordComponent {
+  private readonly authFormService = inject(AuthFormService);
+
   showPassword = signal(false);
   showConfirmPassword = signal(false);
   appRoutes = AppRoutes;
@@ -35,21 +36,8 @@ export class ResetPasswordComponent {
       newPassword: new FormControl('', [Validators.required]),
       confirmNewPassword: new FormControl('', [Validators.required]),
     },
-    { validators: this.passwordMatchValidator }
+    { validators: this.authFormService.passwordMatchValidator }
   );
-
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('newPassword');
-    const confirmPassword = control.get('confirmNewPassword');
-
-    if (!password || !confirmPassword) {
-      return null;
-    }
-
-    return password.value === confirmPassword.value
-      ? null
-      : { passwordMismatch: true };
-  }
 
   togglePasswordVisibility() {
     this.showPassword.set(!this.showPassword());

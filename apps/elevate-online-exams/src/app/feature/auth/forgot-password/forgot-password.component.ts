@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,6 +10,9 @@ import { FieldErrorComponent } from '../../../shared/components/field-error/fiel
 import { RouterLink, Router } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { VerifyOtpComponent } from '../verify-otp/verify-otp.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { AuthMode } from '../model/auth.model';
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,17 +22,25 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
     FieldErrorComponent,
     RouterLink,
     ButtonComponent,
+    VerifyOtpComponent,
+    ResetPasswordComponent,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
   router = inject(Router);
+
   appRoutes = AppRoutes;
+  mode = signal<AuthMode>(AppRoutes.auth.forgotPassword);
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
+
+  handleChangeMode(mode: AuthMode) {
+    this.mode.set(mode);
+  }
 
   continue() {
     if (this.forgotPasswordForm.invalid) {
@@ -39,10 +50,7 @@ export class ForgotPasswordComponent {
     const email = this.forgotPasswordForm.value.email;
     console.log('Sending OTP to:', email);
 
-    // Navigate to verify OTP page
-    this.router.navigate([
-      '/' + this.appRoutes.auth.root,
-      this.appRoutes.auth.verifyOtp,
-    ]);
+    // switch to verify OTP mode
+    this.mode.set(AppRoutes.auth.verifyOtp);
   }
 }
