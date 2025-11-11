@@ -9,6 +9,7 @@ import { FieldErrorDirective } from '../../../shared/directives/field-error/fiel
 import { FieldErrorComponent } from '../../../shared/components/field-error/field-error.component';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { RouterLink } from '@angular/router';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { RouterLink } from '@angular/router';
     FieldErrorDirective,
     FieldErrorComponent,
     RouterLink,
+    ButtonComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

@@ -8,11 +8,16 @@ import {
 import { FieldErrorDirective } from '../../../shared/directives/field-error/field-error.directive';
 import { RouterLink, Router } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
-import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-verify-otp',
-  imports: [ReactiveFormsModule, FieldErrorDirective, RouterLink, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    FieldErrorDirective,
+    RouterLink,
+    ButtonComponent,
+  ],
   templateUrl: './verify-otp.component.html',
   styleUrl: './verify-otp.component.css',
 })

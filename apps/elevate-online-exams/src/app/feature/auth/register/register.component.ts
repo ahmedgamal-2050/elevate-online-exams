@@ -11,6 +11,7 @@ import { FieldErrorDirective } from '../../../shared/directives/field-error/fiel
 import { FieldErrorComponent } from '../../../shared/components/field-error/field-error.component';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ import { AppRoutes } from '../../../core/enum/app-routes';
     FieldErrorDirective,
     FieldErrorComponent,
     RouterLink,
+    ButtonComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',

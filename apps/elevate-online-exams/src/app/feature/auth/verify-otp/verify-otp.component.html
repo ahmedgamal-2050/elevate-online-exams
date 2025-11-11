@@ -1,8 +1,8 @@
 <div class="md:w-[28.25rem] w-full">
-  <button
-    type="button"
+  <app-button
+    buttonType="button"
     (click)="editEmail()"
-    class="mb-6 text-gray-600 hover:text-gray-800"
+    buttonClass="mb-6 text-gray-600 hover:text-gray-800"
   >
     <svg
       width="24"
@@ -19,20 +19,20 @@
         stroke-linejoin="round"
       />
     </svg>
-  </button>
+  </app-button>
 
   <h4 class="text-gray-800 text-2xl font-bold mb-3 font-inter">Verify OTP</h4>
 
   <p class="text-gray-500 text-sm mb-10">
     Please enter the 6-digits code we have sent to:
     <span class="text-gray-800 font-medium">{{ userEmail }}</span>
-    <button
-      type="button"
+    <app-button
+      buttonType="button"
       (click)="editEmail()"
-      class="text-blue-600 hover:text-blue-700 ml-1"
+      buttonClass="text-blue-600 hover:text-blue-700 ml-1"
     >
       Edit
-    </button>
+    </app-button>
   </p>
 
   <form [formGroup]="otpForm" (ngSubmit)="verifyCode()">
@@ -43,8 +43,16 @@
         [id]="'digit' + digit"
         [formControlName]="'digit' + digit"
         [maxlength]="1"
-        (input)="onInput($event, digit, digit < 6 ? 'digit' + (digit + 1) : undefined)"
-        (keydown)="onKeyDown($event, digit, digit > 1 ? 'digit' + (digit - 1) : undefined)"
+        (input)="
+          onInput($event, digit, digit < 6 ? 'digit' + (digit + 1) : undefined)
+        "
+        (keydown)="
+          onKeyDown(
+            $event,
+            digit,
+            digit > 1 ? 'digit' + (digit - 1) : undefined
+          )
+        "
         (paste)="onPaste($event)"
         class="w-14 h-14 text-center text-xl font-medium border border-gray-200 focus:border-blue-600 focus:outline-none"
         appFieldError
@@ -55,26 +63,22 @@
 
     <div class="mb-6 text-center">
       <p class="text-gray-500 text-sm">
-        @if (timer > 0) {
-        You can request another code in: {{ timer }}s
-        } @else {
-        <button
-          type="button"
+        @if (timer > 0) { You can request another code in: {{ timer }}s } @else
+        {
+        <app-button
+          buttonType="button"
           (click)="resendCode()"
-          class="text-blue-600 hover:text-blue-700 font-medium"
+          buttonClass="text-blue-600 hover:text-blue-700 font-medium"
         >
           Resend Code
-        </button>
+        </app-button>
         }
       </p>
     </div>
 
-    <button
-      type="submit"
-      class="w-full bg-blue-600 text-white py-3 text-sm font-medium mb-9"
-    >
+    <app-button buttonType="submit" buttonClass="mb-9" [hasDefaultClass]="true">
       Verify Code
-    </button>
+    </app-button>
 
     <div class="text-center text-gray-500 text-sm font-medium">
       Don't have an account?
@@ -87,4 +91,3 @@
     </div>
   </form>
 </div>
-

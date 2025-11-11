@@ -188,10 +188,10 @@
           appFieldError
           errorClass="border-red-500"
         />
-        <button
-          type="button"
+        <app-button
+          buttonType="button"
           (click)="togglePasswordVisibility()"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
         >
           @if (showPassword) {
           <svg
@@ -247,7 +247,7 @@
             />
           </svg>
           }
-        </button>
+        </app-button>
       </div>
 
       <app-field-error controlName="password" errorKey="required">
@@ -271,10 +271,10 @@
           appFieldError
           errorClass="border-red-500"
         />
-        <button
-          type="button"
+        <app-button
+          buttonType="button"
           (click)="toggleConfirmPasswordVisibility()"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
         >
           @if (showConfirmPassword) {
           <svg
@@ -330,7 +330,7 @@
             />
           </svg>
           }
-        </button>
+        </app-button>
       </div>
 
       <app-field-error controlName="confirmPassword" errorKey="required">
@@ -378,12 +378,9 @@
     </div>
     }
 
-    <button
-      type="submit"
-      class="w-full bg-blue-600 text-white py-3 text-sm font-medium mt-6"
-    >
+    <app-button buttonType="submit" buttonClass="mt-6" [hasDefaultClass]="true">
       Create Account
-    </button>
+    </app-button>
 
     <div class="text-center text-gray-500 text-sm font-medium mt-9">
       Already have an account?
