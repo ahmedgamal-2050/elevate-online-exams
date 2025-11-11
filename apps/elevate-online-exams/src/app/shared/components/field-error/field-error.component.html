@@ -1,6 +1,10 @@
 @if (control.invalid && (control.touched || control.dirty) && control.errors &&
 control.errors[errorKey()]) {
 <p class="text-red-500 text-sm font-medium mt-2">
+  @switch (errorKey()) { @case ('required') { This field is required } @case
+  ('email') { Email is invalid } @case ('passwordMismatch') { Passwords do not
+  match } @default {
   <ng-content />
+  } }
 </p>
 }
