@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve elevate-online-exams -o --port 4002"
+    "start": "nx serve elevate-online-exams -o --port 4002",
+    "build": "nx build elevate-online-exams --verbose",
+    "lint": "nx run elevate-online-exams:lint",
+    "lint:fix": "nx run elevate-online-exams:lint --fix",
+    "test": "nx run elevate-online-exams:test",
+    "prettier": "prettier --write \"**/*.{html,css,scss,ts,js,jsx,json,md}\""
   },
   "private": true,
   "dependencies": {
@@ -19,7 +24,8 @@
     "primeng": "^20.3.0",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.16",
-    "zone.js": "~0.15.0"
+    "tailwindcss-primeui": "^0.6.1",
+    "zone.js": "^0.15.1"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "~1.19.1",
@@ -49,6 +55,7 @@
     "angular-eslint": "^20.3.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "nx": "22.0.2",
