@@ -1,3 +1,5 @@
+import { AuthAdaptor, AuthResponse } from './auth-responses';
+
 export interface Adaptor {
-  adapt(data: any): any;
+  authAdapt(data: AuthResponse): AuthAdaptor;
 }

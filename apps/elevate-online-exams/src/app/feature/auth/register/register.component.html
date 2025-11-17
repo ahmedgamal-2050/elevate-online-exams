@@ -295,7 +295,7 @@
         errorKey="passwordMismatch" />
     </div>
 
-    @if (registerForm.invalid && (registerForm.touched || registerForm.dirty)) {
+    @if (errorMessage()) {
     <div class="relative mb-4">
       <svg
         width="18"
@@ -319,7 +319,7 @@
 
       <p
         class="text-red-500 text-sm font-medium mt-2 border border-red-500 p-2 bg-red-50 text-center mb-9">
-        Something went wrong
+        {{ errorMessage() }}
       </p>
     </div>
     }
