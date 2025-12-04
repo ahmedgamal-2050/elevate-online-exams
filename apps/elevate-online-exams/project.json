@@ -18,7 +18,8 @@
           {
             "glob": "**/*",
             "input": "apps/elevate-online-exams/public"
-          }
+          },
+          "apps/elevate-online-exams/src/assets"
         ],
         "styles": ["apps/elevate-online-exams/src/styles.css"]
       },

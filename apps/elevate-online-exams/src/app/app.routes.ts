@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { authRoutes } from './layout/auth.routes';
 import { AppRoutes } from './core/enum/app-routes';
+import { dashboardRoutes } from './layout/dashboard.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -10,6 +11,14 @@ export const appRoutes: Route[] = [
         m => m.AuthLayoutComponent
       ),
     children: [...authRoutes],
+  },
+  {
+    path: AppRoutes.dashboard.root,
+    loadComponent: () =>
+      import('./layout/dashboard-layout/dashboard-layout.component').then(
+        m => m.DashboardLayoutComponent
+      ),
+    children: [...dashboardRoutes],
   },
   {
     path: '**',

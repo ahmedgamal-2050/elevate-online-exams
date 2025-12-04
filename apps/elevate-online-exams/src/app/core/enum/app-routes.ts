@@ -7,4 +7,10 @@ export const AppRoutes = {
     verifyOtp: 'verify-otp',
     resetPassword: 'reset-password',
   },
+  dashboard: {
+    root: 'dashboard',
+    diplomas: 'diplomas',
+    accountSettings: 'account-settings',
+    account: 'account',
+  },
 } as const;
