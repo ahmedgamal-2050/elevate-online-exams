@@ -13,6 +13,7 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { LoginRequest } from '@ahmed_gamal_2050/auth';
 import { AuthService } from '@ahmed_gamal_2050/auth';
 import { AppStorage } from '../../../core/enum/app-storage';
+import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import { AppStorage } from '../../../core/enum/app-storage';
     FieldErrorComponent,
     RouterLink,
     ButtonComponent,
+    ApiErrorMessageComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

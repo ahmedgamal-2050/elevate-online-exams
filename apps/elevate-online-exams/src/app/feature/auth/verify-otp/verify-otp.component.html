@@ -23,7 +23,7 @@
   <p class="text-gray-500 text-sm mb-10">
     Please enter the 6-digits code we have sent to:
 
-    <span class="text-gray-800 font-medium">{{ userEmail }}</span>
+    <span class="text-gray-800 font-medium">{{ email() }}</span>
 
     <app-button
       buttonType="button"
@@ -72,9 +72,15 @@
       </p>
     </div>
 
-    <app-button buttonType="submit" buttonClass="mb-9" [hasDefaultClass]="true">
+    <app-button
+      buttonType="submit"
+      buttonClass="mb-9"
+      [hasDefaultClass]="true"
+      [disabled]="isLoading()">
       Verify Code
     </app-button>
+
+    <app-api-error-message [message]="errorMessage()" />
 
     <div class="text-center text-gray-500 text-sm font-medium">
       Don't have an account?

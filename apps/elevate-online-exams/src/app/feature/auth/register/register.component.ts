@@ -15,6 +15,7 @@ import { AuthService } from '@ahmed_gamal_2050/auth';
 import { RegisterRequest } from '@ahmed_gamal_2050/auth';
 import { AppStorage } from '../../../core/enum/app-storage';
 import { AuthAdaptor } from '@ahmed_gamal_2050/auth';
+import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,7 @@ import { AuthAdaptor } from '@ahmed_gamal_2050/auth';
     FieldErrorComponent,
     RouterLink,
     ButtonComponent,
+    ApiErrorMessageComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',

@@ -1,4 +1,12 @@
-import { Component, OnInit, OnDestroy, output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  output,
+  input,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,6 +18,12 @@ import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { AuthMode } from '../model/auth.model';
+import {
+  AuthService,
+  ForgotPasswordRequest,
+  VerifyOtpRequest,
+} from '@ahmed_gamal_2050/auth';
+import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
 
 @Component({
   selector: 'app-verify-otp',
@@ -18,17 +32,21 @@ import { AuthMode } from '../model/auth.model';
     FieldErrorDirective,
     RouterLink,
     ButtonComponent,
+    ApiErrorMessageComponent,
   ],
   templateUrl: './verify-otp.component.html',
   styleUrl: './verify-otp.component.css',
 })
 export class VerifyOtpComponent implements OnInit, OnDestroy {
   changeMode = output<AuthMode>();
+  email = input.required<string>();
 
+  private authService = inject(AuthService);
   appRoutes = AppRoutes;
-  userEmail = 'user@example.com';
   timer = 60;
   private timerInterval?: number;
+  isLoading = signal(false);
+  errorMessage = signal('');
 
   otpForm = new FormGroup({
     digit1: new FormControl('', [
@@ -139,12 +157,21 @@ export class VerifyOtpComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const otp = this.getOtpValue();
-    console.log('Verifying OTP:', otp);
-    // Add verification logic here
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    const resetCode = this.getOtpValue();
+    const request: VerifyOtpRequest = { resetCode };
 
-    // switch to reset password mode after successful verification
-    this.changeMode.emit(AppRoutes.auth.resetPassword);
+    this.authService.verifyOtp(request).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.changeMode.emit(AppRoutes.auth.resetPassword);
+      },
+      error: error => {
+        this.isLoading.set(false);
+        this.errorMessage.set(error.apiErrorMessage || 'Invalid code');
+      },
+    });
   }
 
   resendCode() {
@@ -152,9 +179,17 @@ export class VerifyOtpComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log('Resending OTP to:', this.userEmail);
-    this.startTimer();
-    // Add resend logic here
+    this.errorMessage.set('');
+    const request: ForgotPasswordRequest = { email: this.email() };
+
+    this.authService.forgotPassword(request).subscribe({
+      next: () => {
+        this.startTimer();
+      },
+      error: error => {
+        this.errorMessage.set(error.apiErrorMessage || 'Failed to resend code');
+      },
+    });
   }
 
   editEmail() {

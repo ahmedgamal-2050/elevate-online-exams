@@ -13,6 +13,8 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { VerifyOtpComponent } from '../verify-otp/verify-otp.component';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { AuthMode } from '../model/auth.model';
+import { AuthService, ForgotPasswordRequest } from '@ahmed_gamal_2050/auth';
+import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,15 +26,20 @@ import { AuthMode } from '../model/auth.model';
     ButtonComponent,
     VerifyOtpComponent,
     ResetPasswordComponent,
+    ApiErrorMessageComponent,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
   router = inject(Router);
+  private authService = inject(AuthService);
 
   appRoutes = AppRoutes;
   mode = signal<AuthMode>(AppRoutes.auth.forgotPassword);
+  email = signal<string>('');
+  isLoading = signal(false);
+  errorMessage = signal('');
 
   forgotPasswordForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -47,10 +54,22 @@ export class ForgotPasswordComponent {
       return;
     }
 
-    const email = this.forgotPasswordForm.value.email;
-    console.log('Sending OTP to:', email);
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    const email = this.forgotPasswordForm.value.email!;
 
-    // switch to verify OTP mode
-    this.mode.set(AppRoutes.auth.verifyOtp);
+    const request: ForgotPasswordRequest = { email };
+
+    this.authService.forgotPassword(request).subscribe({
+      next: () => {
+        this.email.set(email);
+        this.isLoading.set(false);
+        this.mode.set(AppRoutes.auth.verifyOtp);
+      },
+      error: error => {
+        this.isLoading.set(false);
+        this.errorMessage.set(error.apiErrorMessage || 'Something went wrong');
+      },
+    });
   }
 }
