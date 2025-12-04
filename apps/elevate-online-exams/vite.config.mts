@@ -19,10 +19,15 @@ export default defineConfig(() => ({
     environment: 'jsdom',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     setupFiles: ['src/test-setup.ts'],
-    reporters: ['default'],
+    reporters: ['verbose', 'default'],
     coverage: {
       reportsDirectory: '../../coverage/apps/elevate-online-exams',
       provider: 'v8' as const,
+    },
+    onConsoleLog(log, type) {
+      if (type === 'error') {
+        return false; // Don't suppress errors
+      }
     },
   },
 }));
