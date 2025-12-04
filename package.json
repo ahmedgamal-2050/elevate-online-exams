@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve elevate-online-exams -o --port 4002",
+    "start": "nx serve elevate-online-exams -o --port 4002 --verbose",
     "build": "nx build elevate-online-exams --verbose",
     "lint": "nx run elevate-online-exams:lint",
     "lint:fix": "nx run elevate-online-exams:lint --fix",
@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ahmed_gamal_2050/auth": "^0.0.3",
     "@angular/common": "~20.3.0",
     "@angular/compiler": "~20.3.0",
     "@angular/core": "~20.3.0",

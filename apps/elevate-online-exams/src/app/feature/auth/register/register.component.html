@@ -220,16 +220,16 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-800 font-medium" for="confirmPassword">
+      <label class="block text-gray-800 font-medium" for="rePassword">
         Confirm Password
       </label>
 
       <div class="relative">
         <input
           [type]="showConfirmPassword() ? 'text' : 'password'"
-          id="confirmPassword"
+          id="rePassword"
           placeholder="********"
-          formControlName="confirmPassword"
+          formControlName="rePassword"
           class="w-full border border-gray-200 p-2 pr-10 placeholder:text-gray-400"
           required
           appFieldError
@@ -288,10 +288,10 @@
         </app-button>
       </div>
 
-      <app-field-error controlName="confirmPassword" errorKey="required" />
+      <app-field-error controlName="rePassword" errorKey="required" />
 
       <app-field-error
-        controlName="confirmPassword"
+        controlName="rePassword"
         errorKey="passwordMismatch" />
     </div>
 

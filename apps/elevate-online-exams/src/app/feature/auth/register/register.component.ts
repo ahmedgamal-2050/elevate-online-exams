@@ -11,10 +11,10 @@ import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { AuthFormService } from '../service/auth-form/auth-form.service';
-import { AuthService } from 'libs/auth/src/lib/auth/services/auth.service';
-import { RegisterRequest } from 'libs/auth/src/lib/auth/interfaces/auth-requests';
+import { AuthService } from '@ahmed_gamal_2050/auth';
+import { RegisterRequest } from '@ahmed_gamal_2050/auth';
 import { AppStorage } from '../../../core/enum/app-storage';
-import { AuthAdaptor } from 'libs/auth/src/lib/auth/interfaces/auth-responses';
+import { AuthAdaptor } from '@ahmed_gamal_2050/auth';
 
 @Component({
   selector: 'app-register',
@@ -49,7 +49,7 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      rePassword: new FormControl('', [Validators.required]),
     },
     { validators: this.authFormService.passwordMatchValidator }
   );
@@ -82,6 +82,7 @@ export class RegisterComponent {
           this.isLoading.set(false);
         },
         error: error => {
+          console.log('🚀 ~ RegisterComponent ~ register ~ error:', error);
           this.errorMessage.set(error.error.message ?? 'Something went wrong');
           this.isLoading.set(false);
         },

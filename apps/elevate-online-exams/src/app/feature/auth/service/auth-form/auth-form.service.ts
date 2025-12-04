@@ -7,7 +7,7 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 export class AuthFormService {
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
+    const confirmPassword = control.get('rePassword');
 
     if (!password || !confirmPassword) {
       return null;
