@@ -73,16 +73,13 @@ export class RegisterComponent {
       .register(this.registerForm.value as RegisterRequest)
       .subscribe({
         next: (response: AuthAdaptor) => {
-          console.log(
-            '🚀 ~ RegisterComponent ~ register ~ response:',
-            response
-          );
           localStorage.setItem(AppStorage.TOKEN, response.token);
+          localStorage.setItem(AppStorage.USER_EMAIL, response.email);
+          // temporary until I add navigation and toast
           alert('Account created successfully');
           this.isLoading.set(false);
         },
         error: error => {
-          console.log('🚀 ~ RegisterComponent ~ register ~ error:', error);
           this.errorMessage.set(error.error.message ?? 'Something went wrong');
           this.isLoading.set(false);
         },

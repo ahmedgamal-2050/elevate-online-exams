@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,6 +10,9 @@ import { FieldErrorComponent } from '../../../shared/components/field-error/fiel
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { LoginRequest } from '@ahmed_gamal_2050/auth';
+import { AuthService } from '@ahmed_gamal_2050/auth';
+import { AppStorage } from '../../../core/enum/app-storage';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +33,9 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
   appRoutes = AppRoutes;
+  authService = inject(AuthService);
+  errorMessage = signal('');
+  isLoading = signal(false);
 
   togglePasswordVisibility() {
     this.showPassword.set(!this.showPassword());
@@ -40,6 +46,19 @@ export class LoginComponent {
       return;
     }
 
-    console.log(this.loginForm.value);
+    this.isLoading.set(true);
+    this.authService.login(this.loginForm.value as LoginRequest).subscribe({
+      next: response => {
+        localStorage.setItem(AppStorage.TOKEN, response.token);
+        localStorage.setItem(AppStorage.USER_EMAIL, response.email);
+        // temporary until I add navigation and toast
+        alert('Login successfully');
+        this.isLoading.set(false);
+      },
+      error: error => {
+        this.isLoading.set(false);
+        this.errorMessage.set(error.apiErrorMessage ?? 'Something went wrong');
+      },
+    });
   }
 }

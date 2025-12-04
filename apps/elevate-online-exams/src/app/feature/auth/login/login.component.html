@@ -12,6 +12,7 @@
         formControlName="email"
         class="w-full border border-gray-200 p-2 placeholder:text-gray-400"
         required
+        autocomplete="email"
         appFieldError
         errorClass="border-red-500" />
 
@@ -33,6 +34,7 @@
           formControlName="password"
           class="w-full border border-gray-200 p-2 placeholder:text-gray-400"
           required
+          autocomplete="current-password"
           appFieldError
           errorClass="border-red-500" />
         <app-button
@@ -103,7 +105,7 @@
       </a>
     </div>
 
-    @if (loginForm.invalid && (loginForm.touched || loginForm.dirty)) {
+    @if (errorMessage()) {
     <div class="relative">
       <svg
         width="18"
@@ -127,12 +129,16 @@
 
       <p
         class="text-red-500 text-sm font-medium mt-2 border border-red-500 p-2 bg-red-50 text-center mb-9">
-        Something went wrong
+        {{ errorMessage() }}
       </p>
     </div>
     }
 
-    <app-button buttonType="submit" buttonClass="" [hasDefaultClass]="true">
+    <app-button
+      buttonType="submit"
+      buttonClass=""
+      [hasDefaultClass]="true"
+      [disabled]="isLoading()">
       Login
     </app-button>
 

@@ -290,9 +290,7 @@
 
       <app-field-error controlName="rePassword" errorKey="required" />
 
-      <app-field-error
-        controlName="rePassword"
-        errorKey="passwordMismatch" />
+      <app-field-error controlName="rePassword" errorKey="passwordMismatch" />
     </div>
 
     @if (errorMessage()) {
@@ -324,7 +322,11 @@
     </div>
     }
 
-    <app-button buttonType="submit" buttonClass="mt-6" [hasDefaultClass]="true">
+    <app-button
+      buttonType="submit"
+      buttonClass="mt-6"
+      [hasDefaultClass]="true"
+      [disabled]="isLoading()">
       Create Account
     </app-button>
 
