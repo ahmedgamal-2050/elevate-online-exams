@@ -1,0 +1,8 @@
+<button
+  [type]="buttonType()"
+  [disabled]="disabled()"
+  [class]="buttonClass() + (hasDefaultClass() ? ' ' + defaultButtonClass : '')"
+  [class.opacity-30]="disabled()"
+  [class.cursor-not-allowed]="disabled()">
+  <ng-content />
+</button>
