@@ -1,5 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuComponent } from '../menu/menu.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AppRoutes } from '../../../core/enum/app-routes';
@@ -8,7 +8,7 @@ import { AuthService } from '@ahmed_gamal_2050/auth';
 
 @Component({
   selector: 'app-side-navbar',
-  imports: [RouterLink, MenuComponent],
+  imports: [RouterLink, RouterLinkActive, MenuComponent],
   templateUrl: './side-navbar.component.html',
   styleUrl: './side-navbar.component.css',
 })
@@ -17,7 +17,7 @@ export class SideNavbarComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  sideNavLinks = input<{ label: string; link: string; icon: SafeHtml }[]>([]);
+  sideNavLinks = input<{ label: string; link: string[]; icon: SafeHtml }[]>([]);
 
   dropdownItems = signal<MenuItem[]>([
     {
