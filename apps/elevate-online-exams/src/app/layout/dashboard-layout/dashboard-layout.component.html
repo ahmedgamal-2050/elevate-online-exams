@@ -1,7 +1,7 @@
-<main class="flex h-screen w-screen">
+<main class="flex h-screen w-screen relative clear-both">
   <app-side-navbar [sideNavLinks]="sideNavLinks()" />
 
-  <section class="w-[calc(100%-22.625rem)] h-screen">
+  <section class="w-[calc(100%-22.625rem)] h-screen ms-auto">
     <nav class="bg-white p-4">
       <app-breadcrumb />
     </nav>
@@ -10,6 +10,9 @@
       <app-header />
 
       <router-outlet />
+
+      <!-- Spacer -->
+      <div class="h-6"></div>
     </section>
   </section>
 </main>

@@ -8,7 +8,7 @@ import {
 import { FieldErrorDirective } from '../../../shared/directives/field-error/field-error.directive';
 import { FieldErrorComponent } from '../../../shared/components/field-error/field-error.component';
 import { AppRoutes } from '../../../core/enum/app-routes';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { LoginRequest } from '@ahmed_gamal_2050/auth';
 import { AuthService } from '@ahmed_gamal_2050/auth';
@@ -29,15 +29,19 @@ import { ApiErrorMessageComponent } from '../../../shared/components/api-error-m
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  authService = inject(AuthService);
+  router = inject(Router);
+
+  appRoutes = AppRoutes;
+
   showPassword = signal(false);
+  errorMessage = signal('');
+  isLoading = signal(false);
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
-  appRoutes = AppRoutes;
-  authService = inject(AuthService);
-  errorMessage = signal('');
-  isLoading = signal(false);
 
   togglePasswordVisibility() {
     this.showPassword.set(!this.showPassword());
@@ -53,8 +57,10 @@ export class LoginComponent {
       next: response => {
         localStorage.setItem(AppStorage.TOKEN, response.token);
         localStorage.setItem(AppStorage.USER_EMAIL, response.email);
-        // temporary until I add navigation and toast
-        alert('Login successfully');
+        this.router.navigate([
+          '/' + AppRoutes.dashboard.root,
+          AppRoutes.dashboard.diplomas,
+        ]);
         this.isLoading.set(false);
       },
       error: error => {
