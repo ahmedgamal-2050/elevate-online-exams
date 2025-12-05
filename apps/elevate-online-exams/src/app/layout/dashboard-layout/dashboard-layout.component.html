@@ -1,7 +1,15 @@
 <main class="flex h-screen w-screen">
   <app-side-navbar [sideNavLinks]="sideNavLinks()" />
 
-  <section class="h-screen">
-    <router-outlet />
+  <section class="w-[calc(100%-22.625rem)] h-screen">
+    <nav class="bg-white p-4">
+      <app-breadcrumb />
+    </nav>
+
+    <section class="bg-gray-50 p-6 h-[calc(100%-3.25rem)]">
+      <app-header />
+
+      <router-outlet />
+    </section>
   </section>
 </main>
