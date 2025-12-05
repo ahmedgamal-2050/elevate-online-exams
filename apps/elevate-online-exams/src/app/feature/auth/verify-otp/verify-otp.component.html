@@ -1,0 +1,94 @@
+<div class="md:w-[28.25rem] w-full">
+  <app-button
+    buttonType="button"
+    (click)="editEmail()"
+    buttonClass="mb-6 text-gray-600 hover:text-gray-800">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M19 12H5M12 19L5 12L12 5"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </app-button>
+
+  <h4 class="text-gray-800 text-2xl font-bold mb-3 font-inter">Verify OTP</h4>
+
+  <p class="text-gray-500 text-sm mb-10">
+    Please enter the 6-digits code we have sent to:
+
+    <span class="text-gray-800 font-medium">{{ email() }}</span>
+
+    <app-button
+      buttonType="button"
+      (click)="editEmail()"
+      buttonClass="text-blue-600 hover:text-blue-700 ml-1">
+      Edit
+    </app-button>
+  </p>
+
+  <form [formGroup]="otpForm" (ngSubmit)="verifyCode()">
+    <div class="flex gap-3 mb-6 justify-center">
+      @for (digit of [1,2,3,4,5,6]; track digit) {
+      <input
+        type="text"
+        [id]="'digit' + digit"
+        [formControlName]="'digit' + digit"
+        [maxlength]="1"
+        (input)="
+          onInput($event, digit, digit < 6 ? 'digit' + (digit + 1) : undefined)
+        "
+        (keydown)="
+          onKeyDown(
+            $event,
+            digit,
+            digit > 1 ? 'digit' + (digit - 1) : undefined
+          )
+        "
+        (paste)="onPaste($event)"
+        class="w-14 h-14 text-center text-xl font-medium border border-gray-200 focus:border-blue-600 focus:outline-none"
+        appFieldError
+        errorClass="border-red-500" />
+      }
+    </div>
+
+    <div class="mb-6 text-center">
+      <p class="text-gray-500 text-sm">
+        @if (timer > 0) { You can request another code in: {{ timer }}s } @else
+        {
+        <app-button
+          buttonType="button"
+          (click)="resendCode()"
+          buttonClass="text-blue-600 hover:text-blue-700 font-medium">
+          Resend Code
+        </app-button>
+        }
+      </p>
+    </div>
+
+    <app-button
+      buttonType="submit"
+      buttonClass="mb-9"
+      [hasDefaultClass]="true"
+      [disabled]="isLoading()">
+      Verify Code
+    </app-button>
+
+    <app-api-error-message [errorMessage]="errorMessage()" />
+
+    <div class="text-center text-gray-500 text-sm font-medium">
+      Don't have an account?
+      <a
+        [routerLink]="['/' + appRoutes.auth.root, appRoutes.auth.register]"
+        class="text-blue-600">
+        Create yours
+      </a>
+    </div>
+  </form>
+</div>
