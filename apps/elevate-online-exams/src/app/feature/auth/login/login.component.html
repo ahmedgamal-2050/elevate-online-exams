@@ -1,0 +1,127 @@
+<div class="md:w-[28.25rem] w-full">
+  <h4 class="text-gray-800 text-2xl font-bold mb-10 font-inter">Login</h4>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="mb-4">
+      <label class="block text-gray-800 font-medium" for="email">Email</label>
+
+      <input
+        type="text"
+        id="email"
+        placeholder="user@example.com"
+        formControlName="email"
+        class="w-full border border-gray-200 p-2 placeholder:text-gray-400"
+        required
+        autocomplete="email"
+        appFieldError
+        errorClass="border-red-500" />
+
+      <app-field-error controlName="email" errorKey="required" />
+
+      <app-field-error controlName="email" errorKey="email" />
+    </div>
+
+    <div>
+      <label class="block text-gray-800 font-medium" for="password">
+        Password
+      </label>
+
+      <div class="relative">
+        <input
+          [type]="showPassword() ? 'text' : 'password'"
+          id="password"
+          placeholder="********"
+          formControlName="password"
+          class="w-full border border-gray-200 p-2 placeholder:text-gray-400"
+          required
+          autocomplete="current-password"
+          appFieldError
+          errorClass="border-red-500" />
+        <app-button
+          buttonType="button"
+          (click)="togglePasswordVisibility()"
+          buttonClass="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+          @if (showPassword()) {
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2.5 10C2.5 10 5.83333 4.16667 10 4.16667C14.1667 4.16667 17.5 10 17.5 10C17.5 10 14.1667 15.8333 10 15.8333C5.83333 15.8333 2.5 10 2.5 10Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          } @else {
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2.5 10C2.5 10 5.83333 4.16667 10 4.16667C14.1667 4.16667 17.5 10 17.5 10C17.5 10 14.1667 15.8333 10 15.8333C5.83333 15.8333 2.5 10 2.5 10Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M3.33333 3.33333L16.6667 16.6667"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          }
+        </app-button>
+      </div>
+
+      <app-field-error controlName="password" errorKey="required" />
+    </div>
+
+    <div class="text-end mb-10">
+      <a
+        [routerLink]="[
+          '/' + appRoutes.auth.root,
+          appRoutes.auth.forgotPassword
+        ]"
+        class="text-blue-600 text-sm font-medium mt-2">
+        Forgot your password?
+      </a>
+    </div>
+
+    <app-api-error-message [errorMessage]="errorMessage()" />
+
+    <app-button
+      buttonType="submit"
+      buttonClass=""
+      [hasDefaultClass]="true"
+      [disabled]="isLoading()">
+      Login
+    </app-button>
+
+    <div class="text-center text-gray-500 text-sm font-medium mt-9">
+      Don’t have an account?
+      <a
+        [routerLink]="['/' + appRoutes.auth.root, appRoutes.auth.register]"
+        class="text-blue-600">
+        Create yours
+      </a>
+    </div>
+  </form>
+</div>
