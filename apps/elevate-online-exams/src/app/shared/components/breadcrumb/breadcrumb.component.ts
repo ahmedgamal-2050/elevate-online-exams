@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { BreadcrumbService } from './service/breadcrumb.service';
 import { RouterLink } from '@angular/router';
 import { Breadcrumb } from './breadcrumb.model';
@@ -12,7 +12,7 @@ import { Breadcrumb } from './breadcrumb.model';
 export class BreadcrumbComponent {
   private breadcrumbService = inject(BreadcrumbService);
 
-  breadcrumbList = signal<Breadcrumb[]>(
+  breadcrumbList = computed<Breadcrumb[]>(() =>
     this.breadcrumbService.breadcrumbList()
   );
 }

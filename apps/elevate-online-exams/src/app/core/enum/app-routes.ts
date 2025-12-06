@@ -12,5 +12,7 @@ export const AppRoutes = {
     diplomas: 'diplomas',
     accountSettings: 'account-settings',
     account: 'account',
+    exams: 'exams',
+    questions: 'questions',
   },
 } as const;

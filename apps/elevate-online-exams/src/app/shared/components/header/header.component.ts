@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HeaderService } from './service/header.service';
 
@@ -12,12 +12,16 @@ export class HeaderComponent {
   private sanitizer = inject(DomSanitizer);
   private headerService = inject(HeaderService);
 
-  header = signal<{ title: string; icon: SafeHtml; hasBackButton: boolean }>({
-    ...this.headerService.header(),
-    icon: this.sanitizer.bypassSecurityTrustHtml(
-      this.headerService.header().icon
-    ),
-  });
+  header = computed<{ title: string; icon: SafeHtml; hasBackButton: boolean }>(
+    () => {
+      return {
+        ...this.headerService.header(),
+        icon: this.sanitizer.bypassSecurityTrustHtml(
+          this.headerService.header().icon
+        ),
+      };
+    }
+  );
 
   goBack() {
     history.back();

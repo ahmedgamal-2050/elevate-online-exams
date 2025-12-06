@@ -1,0 +1,46 @@
+export const examsResponse = {
+  message: 'success',
+  metadata: {
+    currentPage: 1,
+    numberOfPages: 1,
+    limit: 40,
+  },
+  exams: [
+    {
+      _id: '6700707030a3c3c1944a9c5d',
+      title: 'JavaScript Quiz',
+      duration: 20,
+      subject: '670039c3728c92b7fdf43506',
+      numberOfQuestions: 25,
+      active: true,
+      createdAt: '2024-10-04T22:47:12.913Z',
+    },
+    {
+      _id: '6700708d30a3c3c1944a9c60',
+      title: 'CSS Quiz',
+      duration: 20,
+      subject: '670038f7728c92b7fdf43501',
+      numberOfQuestions: 25,
+      active: true,
+      createdAt: '2024-10-04T22:47:41.364Z',
+    },
+    {
+      _id: '670070a830a3c3c1944a9c63',
+      title: 'HTML Quiz',
+      duration: 25,
+      subject: '670037f6728c92b7fdf434fc',
+      numberOfQuestions: 40,
+      active: true,
+      createdAt: '2024-10-04T22:48:08.842Z',
+    },
+    {
+      _id: '670070cc30a3c3c1944a9c66',
+      title: 'React Quiz',
+      duration: 25,
+      subject: '67003aad728c92b7fdf4350e',
+      numberOfQuestions: 25,
+      active: true,
+      createdAt: '2024-10-04T22:48:44.245Z',
+    },
+  ],
+};

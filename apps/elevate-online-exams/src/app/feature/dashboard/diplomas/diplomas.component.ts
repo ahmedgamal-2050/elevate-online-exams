@@ -7,6 +7,7 @@ import {
   SubjectsResponse,
 } from '../../../feature/dashboard/diplomas/model/diplomas.model';
 import { RouterLink } from '@angular/router';
+import { AppRoutes } from '../../../core/enum/app-routes';
 
 @Component({
   selector: 'app-diplomas',
@@ -18,8 +19,14 @@ export class DiplomasComponent implements OnInit {
   private headerService = inject(HeaderService);
   private diplomasService = inject(DiplomasService);
 
+  appRoutes = AppRoutes;
+
   subjects = signal<Subject[]>([]);
-  meta = signal<MetaData | undefined>(undefined);
+  meta = signal<MetaData>({
+    currentPage: 1,
+    numberOfPages: 1,
+    limit: 1,
+  });
   isLoading = signal(false);
   page = signal(1);
 
@@ -55,6 +62,9 @@ export class DiplomasComponent implements OnInit {
   }
 
   loadMore() {
+    if (this.meta().currentPage === this.meta().numberOfPages) {
+      return;
+    }
     this.page.set(this.page() + 1);
     this.getAllSubjects();
   }
