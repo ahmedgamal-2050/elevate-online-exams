@@ -1,0 +1,75 @@
+<button type="button" class="relative" (click)="toggleDialog()">
+  <svg
+    width="28"
+    height="28"
+    viewBox="0 0 28 28"
+    class="size-7 text-gray-500"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M14 14.75C14.4142 14.75 14.75 14.4142 14.75 14C14.75 13.5858 14.4142 13.25 14 13.25C13.5858 13.25 13.25 13.5858 13.25 14C13.25 14.4142 13.5858 14.75 14 14.75Z"
+      fill="currentColor" />
+    <path
+      d="M14 9.5C14.4142 9.5 14.75 9.16421 14.75 8.75C14.75 8.33579 14.4142 8 14 8C13.5858 8 13.25 8.33579 13.25 8.75C13.25 9.16421 13.5858 9.5 14 9.5Z"
+      fill="currentColor" />
+    <path
+      d="M14 20C14.4142 20 14.75 19.6642 14.75 19.25C14.75 18.8358 14.4142 18.5 14 18.5C13.5858 18.5 13.25 18.8358 13.25 19.25C13.25 19.6642 13.5858 20 14 20Z"
+      fill="currentColor" />
+    <path
+      d="M14 14.75C14.4142 14.75 14.75 14.4142 14.75 14C14.75 13.5858 14.4142 13.25 14 13.25C13.5858 13.25 13.25 13.5858 13.25 14C13.25 14.4142 13.5858 14.75 14 14.75Z"
+      stroke="currentColor"
+      stroke-width="0.9375"
+      stroke-linecap="round"
+      stroke-linejoin="round" />
+    <path
+      d="M14 9.5C14.4142 9.5 14.75 9.16421 14.75 8.75C14.75 8.33579 14.4142 8 14 8C13.5858 8 13.25 8.33579 13.25 8.75C13.25 9.16421 13.5858 9.5 14 9.5Z"
+      stroke="currentColor"
+      stroke-width="0.9375"
+      stroke-linecap="round"
+      stroke-linejoin="round" />
+    <path
+      d="M14 20C14.4142 20 14.75 19.6642 14.75 19.25C14.75 18.8358 14.4142 18.5 14 18.5C13.5858 18.5 13.25 18.8358 13.25 19.25C13.25 19.6642 13.5858 20 14 20Z"
+      stroke="currentColor"
+      stroke-width="0.9375"
+      stroke-linecap="round"
+      stroke-linejoin="round" />
+  </svg>
+
+  <dialog
+    class="bottom-10 -start-[14.5rem] min-w-[16.5rem]"
+    [open]="isDialogOpen()">
+    @if (dropdownItems().length > 0) {
+    <ul>
+      @for (item of dropdownItems(); track item.key; let isLast = $last) {
+      <li>
+        @if (item.hasLink) {
+        <a
+          class="p-4 text-gray-800 flex items-center gap-2"
+          [class.border-b]="!isLast"
+          [class.border-gray-200]="!isLast"
+          [routerLink]="item.link">
+          <span class="text-gray-500" [innerHTML]="item.icon"></span>
+          <span>{{ item.label }}</span>
+        </a>
+        } @else {
+        <button
+          class="p-4 flex items-center gap-2"
+          [class.text-red-600]="item.key === 'logout'"
+          [class.text-gray-800]="item.key !== 'logout'"
+          [class.border-b]="!isLast"
+          [class.border-gray-200]="!isLast"
+          (click)="handleMenuAction(item.key)">
+          <span
+            class=""
+            [class.text-red-600]="item.key === 'logout'"
+            [class.text-gray-500]="item.key !== 'logout'"
+            [innerHTML]="item.icon"></span>
+          <span>{{ item.label }}</span>
+        </button>
+        }
+      </li>
+      }
+    </ul>
+    }
+  </dialog>
+</button>

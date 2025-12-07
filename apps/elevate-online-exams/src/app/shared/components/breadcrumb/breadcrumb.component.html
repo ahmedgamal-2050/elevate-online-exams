@@ -1,0 +1,18 @@
+<ul class="flex items-center gap-2">
+  @for (item of breadcrumbList(); track item.label; let isLast = $last) {
+  <li>
+    @if (!isLast) {
+    <a class="font-normal text-gray-400 text-sm" [routerLink]="item.link">
+      {{ item.label }}
+    </a>
+    } @else {
+    <!-- active -->
+    <p class="font-normal text-blue-600 text-sm">{{ item.label }}</p>
+    }
+  </li>
+  @if (!isLast) {
+  <li>
+    <span class="font-normal text-gray-400 text-sm">/</span>
+  </li>
+  } }
+</ul>
