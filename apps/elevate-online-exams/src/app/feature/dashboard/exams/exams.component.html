@@ -3,6 +3,7 @@
   @for(exam of exams(); track exam._id; let i = $index) {
   <a
     [routerLink]="[exam._id, appRoutes.dashboard.questions]"
+    [queryParams]="{ title: exam.title }"
     class="h-20 bg-blue-50 p-4 font-geist-mono flex items-center justify-between">
     <div class="flex flex-col gap-1">
       <p class="font-semibold text-xl text-blue-600">{{ exam.title }}</p>
