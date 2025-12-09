@@ -60,11 +60,13 @@
 
       <div>
         <p class="font-semibold text-base text-blue-600 font-geist-mono">
-          First name
+          {{
+            user() ? user()?.firstName + ' ' + user()?.lastName : 'User name'
+          }}
         </p>
 
         <p class="font-normal text-sm text-gray-500 font-geist-mono">
-          user-email@example.com
+          {{ user() ? user()?.email : 'user-email@example.com' }}
         </p>
       </div>
 

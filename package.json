@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@ahmed_gamal_2050/auth": "^0.0.3",
+    "@ahmed_gamal_2050/auth": "^0.0.4",
     "@angular/common": "~20.3.0",
     "@angular/compiler": "~20.3.0",
     "@angular/core": "~20.3.0",

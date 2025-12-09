@@ -14,8 +14,9 @@ import { AuthFormService } from '../service/auth-form/auth-form.service';
 import { AuthService } from '@ahmed_gamal_2050/auth';
 import { RegisterRequest } from '@ahmed_gamal_2050/auth';
 import { AppStorage } from '../../../core/enum/app-storage';
-import { AuthAdaptor } from '@ahmed_gamal_2050/auth';
 import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
+import { AuthResponse } from '../auth.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +34,7 @@ import { ApiErrorMessageComponent } from '../../../shared/components/api-error-m
 export class RegisterComponent {
   private readonly authFormService = inject(AuthFormService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   showPassword = signal(false);
   showConfirmPassword = signal(false);
@@ -74,11 +76,13 @@ export class RegisterComponent {
     this.authService
       .register(this.registerForm.value as RegisterRequest)
       .subscribe({
-        next: (response: AuthAdaptor) => {
+        next: (response: AuthResponse) => {
           localStorage.setItem(AppStorage.TOKEN, response.token);
-          localStorage.setItem(AppStorage.USER_EMAIL, response.email);
-          // temporary until I add navigation and toast
-          alert('Account created successfully');
+          localStorage.setItem(AppStorage.USER, JSON.stringify(response.user));
+          this.router.navigate([
+            '/' + AppRoutes.dashboard.root,
+            AppRoutes.dashboard.diplomas,
+          ]);
           this.isLoading.set(false);
         },
         error: error => {

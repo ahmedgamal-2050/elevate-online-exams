@@ -5,6 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AppRoutes } from '../../../core/enum/app-routes';
 import { MenuItem } from '../menu/menu.model';
 import { AuthService } from '@ahmed_gamal_2050/auth';
+import { AppStorage } from '../../../core/enum/app-storage';
+import { User } from '../../../feature/auth/auth.model';
 
 @Component({
   selector: 'app-side-navbar',
@@ -45,6 +47,9 @@ export class SideNavbarComponent {
       hasLink: false,
     },
   ]);
+  user = signal<User | null>(
+    JSON.parse(localStorage.getItem(AppStorage.USER) || '') ?? null
+  );
 
   handleMenuAction(itemKey: string) {
     switch (itemKey) {

@@ -14,6 +14,7 @@ import { LoginRequest } from '@ahmed_gamal_2050/auth';
 import { AuthService } from '@ahmed_gamal_2050/auth';
 import { AppStorage } from '../../../core/enum/app-storage';
 import { ApiErrorMessageComponent } from '../../../shared/components/api-error-message/api-error-message.component';
+import { AuthResponse } from '../auth.model';
 
 @Component({
   selector: 'app-login',
@@ -43,6 +44,11 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
+  constructor() {
+    localStorage.removeItem(AppStorage.TOKEN);
+    localStorage.removeItem(AppStorage.USER);
+  }
+
   togglePasswordVisibility() {
     this.showPassword.set(!this.showPassword());
   }
@@ -54,9 +60,9 @@ export class LoginComponent {
 
     this.isLoading.set(true);
     this.authService.login(this.loginForm.value as LoginRequest).subscribe({
-      next: response => {
+      next: (response: AuthResponse) => {
         localStorage.setItem(AppStorage.TOKEN, response.token);
-        localStorage.setItem(AppStorage.USER_EMAIL, response.email);
+        localStorage.setItem(AppStorage.USER, JSON.stringify(response.user));
         this.router.navigate([
           '/' + AppRoutes.dashboard.root,
           AppRoutes.dashboard.diplomas,

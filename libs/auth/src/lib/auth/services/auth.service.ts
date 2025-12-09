@@ -25,16 +25,12 @@ export class AuthService extends AuthApiBase {
   private readonly http = inject(HttpClient);
   private readonly authAdaptor = inject(AuthApiAdaptor);
 
-  override register(data: RegisterRequest): Observable<AuthAdaptor> {
-    return this.http
-      .post<AuthResponse>(AuthEndpoints.REGISTER, data)
-      .pipe(map(response => this.authAdaptor.authAdapt(response)));
+  override register(data: RegisterRequest): Observable<any> {
+    return this.http.post<AuthResponse>(AuthEndpoints.REGISTER, data);
   }
 
-  override login(data: LoginRequest): Observable<AuthAdaptor> {
-    return this.http
-      .post<AuthResponse>(AuthEndpoints.LOGIN, data)
-      .pipe(map(response => this.authAdaptor.authAdapt(response)));
+  override login(data: LoginRequest): Observable<any> {
+    return this.http.post<AuthResponse>(AuthEndpoints.LOGIN, data);
   }
 
   override changePassword(data: ChangePasswordRequest): Observable<any> {
