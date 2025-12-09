@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ModalComponent],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
