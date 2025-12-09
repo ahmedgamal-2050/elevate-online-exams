@@ -11,7 +11,7 @@
     @if (activeTab() === 'profile') {
     <app-profile
       [profileForm]="profileForm"
-      [isLoading]="isLoading()"
+      [isLoading]="isProfileLoading()"
       (showDeleteAccountModal)="openDeleteAccountModal()"
       (updateProfile)="saveProfile()" />
     }
@@ -20,7 +20,7 @@
     @if (activeTab() === 'password') {
     <app-change-password
       [passwordForm]="passwordForm"
-      [isLoading]="isLoading()"
+      [isLoading]="isPasswordLoading()"
       (changePassword)="changePassword()" />
     }
   </div>
