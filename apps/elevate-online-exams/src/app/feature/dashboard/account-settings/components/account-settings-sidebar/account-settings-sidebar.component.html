@@ -1,0 +1,74 @@
+<nav class="flex flex-col gap-2">
+  <button
+    (click)="setActiveTab('profile')"
+    class="flex items-center gap-2 px-4 py-3 text-left transition-all duration-200"
+    [class.bg-blue-50]="activeTab() === 'profile'"
+    [class.text-blue-600]="activeTab() === 'profile'"
+    [class.font-medium]="activeTab() === 'profile'"
+    [class.text-gray-600]="activeTab() !== 'profile'"
+    [class.hover:bg-gray-50]="activeTab() !== 'profile'">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      class="size-6"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M18 20C18 18.4087 17.3679 16.8826 16.2426 15.7574C15.1174 14.6321 13.5913 14 12 14M12 14C10.4087 14 8.88258 14.6321 7.75736 15.7574C6.63214 16.8826 6 18.4087 6 20M12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+    <span>Profile</span>
+  </button>
+
+  <button
+    (click)="setActiveTab('password')"
+    class="flex items-center gap-2 px-4 py-3 text-start font-normal transition-all duration-200"
+    [class.bg-blue-50]="activeTab() === 'password'"
+    [class.text-blue-600]="activeTab() === 'password'"
+    [class.text-gray-500]="activeTab() !== 'password'"
+    [class.hover:bg-gray-50]="activeTab() !== 'password'">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      class="size-6"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11M5 11H19C20.1046 11 21 11.8954 21 13V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V13C3 11.8954 3.89543 11 5 11Z"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+
+    <span>Change Password</span>
+  </button>
+</nav>
+
+<!-- Logout Button -->
+<button
+  (click)="logout()"
+  class="flex items-center gap-2 px-4 py-3 mt-auto font-normal text-red-600 bg-red-50 transition-all duration-200 w-full mt-8">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="size-6"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M8 17L3 12M3 12L8 7M3 12H15M15 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V5C21 4.46957 20.7893 3.96086 20.4142 3.58579C20.0391 3.21071 19.5304 3 19 3H15"
+      stroke="currentColor"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      stroke-linejoin="round" />
+  </svg>
+
+  <span>Logout</span>
+</button>

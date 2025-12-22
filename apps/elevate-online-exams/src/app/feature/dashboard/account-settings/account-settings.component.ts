@@ -1,0 +1,237 @@
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { HeaderService } from '../../../shared/components/header/service/header.service';
+import { Router } from '@angular/router';
+import { AuthService, ChangePasswordRequest } from '@ahmed_gamal_2050/auth';
+import { AppRoutes } from '../../../core/enum/app-routes';
+import { Subscription } from 'rxjs';
+import { ModalService } from '../../../shared/components/modal/service/modal.service';
+import { User } from '../../auth/auth.model';
+import { AppStorage } from '../../../core/enum/app-storage';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AccountSettingsSidebarComponent } from './components/account-settings-sidebar/account-settings-sidebar.component';
+import { FormHelpersService } from '../../../core/services/form-helpers/form-helpers.service';
+
+@Component({
+  selector: 'app-account-settings',
+  imports: [
+    ReactiveFormsModule,
+    ProfileComponent,
+    ChangePasswordComponent,
+    AccountSettingsSidebarComponent,
+  ],
+  templateUrl: './account-settings.component.html',
+  styleUrl: './account-settings.component.css',
+})
+export class AccountSettingsComponent implements OnInit, OnDestroy {
+  private headerService = inject(HeaderService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private modal = inject(ModalService);
+  private formHelpers = inject(FormHelpersService);
+
+  appRoutes = AppRoutes;
+
+  deleteAccountModal = viewChild<TemplateRef<any>>('deleteAccountModal');
+
+  activeTab = signal<'profile' | 'password'>('profile');
+  user = signal<User | null>(
+    JSON.parse(localStorage.getItem(AppStorage.USER) ?? '') ?? null
+  );
+  isProfileLoading = signal(false);
+  isPasswordLoading = signal(false);
+  profileErrorMessage = signal('');
+  changePasswordErrorMessage = signal('');
+
+  subscription: Subscription = new Subscription();
+
+  profileForm = new FormGroup({
+    firstName: new FormControl(this.user()?.firstName ?? '', [
+      Validators.required,
+    ]),
+    lastName: new FormControl(this.user()?.lastName ?? '', [
+      Validators.required,
+    ]),
+    username: new FormControl(this.user()?.username ?? '', [
+      Validators.required,
+    ]),
+    email: new FormControl(this.user()?.email ?? '', [
+      Validators.required,
+      Validators.email,
+    ]),
+    phone: new FormControl(this.user()?.phone ?? '', [Validators.required]),
+  });
+
+  passwordForm = new FormGroup({
+    oldPassword: new FormControl('', [Validators.required]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    rePassword: new FormControl('', [Validators.required]),
+  });
+
+  profileInitialValue = signal(this.profileForm.getRawValue());
+
+  ngOnInit(): void {
+    this.updateHeader();
+  }
+
+  updateHeader() {
+    this.headerService.header.set({
+      title: 'Account Settings',
+      icon: `
+        <svg width="45" height="45" viewBox="0 0 45 45" class="size-11" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.5 23.4375C26.8492 23.4375 30.375 19.9117 30.375 15.5625C30.375 11.2133 26.8492 7.6875 22.5 7.6875C18.1508 7.6875 14.625 11.2133 14.625 15.5625C14.625 19.9117 18.1508 23.4375 22.5 23.4375ZM22.5 23.4375C25.4837 23.4375 28.3452 24.6227 30.4549 26.7324C32.5646 28.8421 33.75 31.7036 33.75 34.6875M22.5 23.4375C19.5163 23.4375 16.6548 24.6227 14.5451 26.7324C12.4354 28.8421 11.25 31.7036 11.25 34.6875" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        `,
+      hasBackButton: true,
+    });
+  }
+
+  setActiveTab(tab: 'profile' | 'password') {
+    this.activeTab.set(tab);
+  }
+
+  saveProfile() {
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
+    // compare between the initial value and the current value
+    if (
+      this.formHelpers.hasFormChanged(
+        this.profileForm.getRawValue(),
+        this.profileInitialValue()
+      )
+    ) {
+      this.isProfileLoading.set(true);
+      this.subscription.add(
+        this.authService.editProfile(this.handleOnlyChangedFields()).subscribe({
+          next: () => {
+            this.isProfileLoading.set(false);
+            this.profileInitialValue.set(this.profileForm.getRawValue());
+            alert('Profile updated successfully');
+          },
+          error: error => {
+            this.isProfileLoading.set(false);
+            this.profileErrorMessage.set(
+              error.apiErrorMessage ?? 'Something went wrong'
+            );
+          },
+        })
+      );
+    } else {
+      this.profileErrorMessage.set(
+        'You need to change any field to update your profile'
+      );
+    }
+  }
+
+  handleOnlyChangedFields() {
+    // compare between the initial profile form value and the current
+    // and send only the changed fields to the API
+    let changedFields: any = {};
+    Object.keys(this.profileForm.value).reduce((acc, key) => {
+      if (
+        this.profileForm.value[
+          key as 'firstName' | 'lastName' | 'username' | 'email' | 'phone'
+        ] !==
+        this.profileInitialValue()[
+          key as 'firstName' | 'lastName' | 'username' | 'email' | 'phone'
+        ]
+      ) {
+        changedFields = {
+          ...changedFields,
+          [key]:
+            this.profileForm.value[
+              key as 'firstName' | 'lastName' | 'username' | 'email' | 'phone'
+            ],
+        };
+        return;
+      }
+      return;
+    }, {} as any);
+    return changedFields;
+  }
+
+  changePassword() {
+    if (this.passwordForm.invalid) {
+      return;
+    }
+
+    this.isPasswordLoading.set(true);
+    const passwordRequest: ChangePasswordRequest = {
+      oldPassword: this.passwordForm.value.oldPassword?.toString() ?? '',
+      password: this.passwordForm.value.password?.toString() ?? '',
+      rePassword: this.passwordForm.value.rePassword?.toString() ?? '',
+    };
+    this.subscription.add(
+      this.authService.changePassword(passwordRequest).subscribe({
+        next: () => {
+          this.isPasswordLoading.set(false);
+          this.passwordForm.reset();
+          alert('Password changed successfully');
+        },
+        error: error => {
+          this.isPasswordLoading.set(false);
+          this.changePasswordErrorMessage.set(
+            error.apiErrorMessage ?? 'Something went wrong'
+          );
+        },
+      })
+    );
+  }
+
+  openDeleteAccountModal() {
+    this.modal.dialog.set({
+      template: this.deleteAccountModal(),
+      isOpen: true,
+      class: 'w-[34.875rem]',
+    });
+  }
+
+  logout() {
+    this.subscription.add(
+      this.authService.logout().subscribe(() => {
+        localStorage.clear();
+        this.router.navigate(['/' + AppRoutes.auth.root, AppRoutes.auth.login]);
+      })
+    );
+  }
+
+  closeModal() {
+    this.modal.dialog.set({
+      isOpen: false,
+    });
+  }
+
+  deleteAccount() {
+    this.isProfileLoading.set(true);
+    this.subscription.add(
+      this.authService.deleteMyAccount().subscribe(() => {
+        this.isProfileLoading.set(false);
+        this.logout();
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+}
