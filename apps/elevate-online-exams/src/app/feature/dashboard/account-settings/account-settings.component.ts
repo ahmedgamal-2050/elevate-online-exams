@@ -24,6 +24,7 @@ import { AppStorage } from '../../../core/enum/app-storage';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AccountSettingsSidebarComponent } from './components/account-settings-sidebar/account-settings-sidebar.component';
+import { FormHelpersService } from '../../../core/services/form-helpers/form-helpers.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -41,6 +42,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
   private modal = inject(ModalService);
+  private formHelpers = inject(FormHelpersService);
 
   appRoutes = AppRoutes;
 
@@ -113,14 +115,11 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
 
     // compare between the initial value and the current value
     if (
-      JSON.stringify(this.profileForm.getRawValue()) ===
-      JSON.stringify(this.profileInitialValue())
+      this.formHelpers.hasFormChanged(
+        this.profileForm.getRawValue(),
+        this.profileInitialValue()
+      )
     ) {
-      this.profileErrorMessage.set(
-        'You need to change any field to update your profile'
-      );
-      return;
-    } else {
       this.isProfileLoading.set(true);
       this.subscription.add(
         this.authService.editProfile(this.handleOnlyChangedFields()).subscribe({
@@ -136,6 +135,10 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
             );
           },
         })
+      );
+    } else {
+      this.profileErrorMessage.set(
+        'You need to change any field to update your profile'
       );
     }
   }
