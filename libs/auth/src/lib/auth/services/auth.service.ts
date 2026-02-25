@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthApiBase } from '../base/auth-api';
-import { AuthEndpoints } from '../enums/auth-endpoints';
+import { AuthEndpoints } from '../enums/flower-auth-endpoints';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   RegisterRequest,
   LoginRequest,
@@ -14,16 +14,13 @@ import {
 import {
   GeneralSuccessResponse,
   AuthResponse,
-  AuthAdaptor,
 } from '../interfaces/auth-responses';
-import { AuthApiAdaptor } from '../adaptor/auth-api.adaptor';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends AuthApiBase {
   private readonly http = inject(HttpClient);
-  private readonly authAdaptor = inject(AuthApiAdaptor);
 
   override register(data: RegisterRequest): Observable<any> {
     return this.http.post<AuthResponse>(AuthEndpoints.REGISTER, data);
@@ -41,6 +38,14 @@ export class AuthService extends AuthApiBase {
     return this.http.delete<GeneralSuccessResponse>(
       AuthEndpoints.DELETE_MY_ACCOUNT
     );
+  }
+
+  override uploadProfilePhoto(data: any): Observable<any> {
+    return this.http.put(AuthEndpoints.UPLOAD_PROFILE_PHOTO, data);
+  }
+
+  override changeUserRole(data: any): Observable<any> {
+    return this.http.patch(AuthEndpoints.CHANGE_USER_ROLE, data);
   }
 
   override editProfile(data: any): Observable<any> {

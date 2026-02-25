@@ -15,6 +15,8 @@ export abstract class AuthApiBase {
   abstract changePassword(data: ChangePasswordRequest): Observable<any>;
   abstract deleteMyAccount(): Observable<GeneralSuccessResponse>;
   abstract editProfile(data: any): Observable<any>;
+  abstract uploadProfilePhoto(data: any): Observable<any>;
+  abstract changeUserRole(data: any): Observable<any>;
   abstract logout(): Observable<GeneralSuccessResponse>;
   abstract profileData(): Observable<any>;
   abstract forgotPassword(data: ForgotPasswordRequest): Observable<any>;
