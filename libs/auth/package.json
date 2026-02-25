@@ -1,0 +1,9 @@
+{
+  "name": "@ahmed_gamal_2050/auth",
+  "version": "0.0.5",
+  "peerDependencies": {
+    "@angular/common": "^21.1.5",
+    "@angular/core": "^21.1.5"
+  },
+  "sideEffects": false
+}
